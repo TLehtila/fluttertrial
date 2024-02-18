@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatelessWidget {
-  @override
+@override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -44,8 +44,9 @@ class MyHomePage extends StatelessWidget {
           Progress(),
           Row(
             children: [
-              TaskList(), 
-              HiddenButton(),
+              TaskList(),
+              if(true)
+                HiddenButton(), 
             ],
           ),
         ],
@@ -53,6 +54,7 @@ class MyHomePage extends StatelessWidget {
     );
   }
 }
+
 
 class HiddenButton extends StatefulWidget {
   const HiddenButton({super.key});
@@ -64,7 +66,10 @@ class HiddenButton extends StatefulWidget {
 class _ButtonState extends State<HiddenButton> {
   @override
   Widget build(BuildContext context) {
-    final ButtonStyle style = FilledButton.styleFrom(textStyle: const TextStyle(fontSize: 20));
+    final ButtonStyle style = FilledButton.styleFrom(
+      textStyle: const TextStyle(fontSize: 20),
+      backgroundColor: Colors.amber,
+      );
 
     return Wrap(
       direction: Axis.vertical,
@@ -73,9 +78,9 @@ class _ButtonState extends State<HiddenButton> {
       runSpacing: 5, 
       children:[
           FilledButton(
-          style: style,
-          onPressed: () {},
-          child: const Text('Venture forth'),
+            style: style,
+            onPressed: () {},
+            child: const Text('Venture forth'),
           ),
         ]
       );
@@ -95,7 +100,10 @@ class Progress extends ConsumerWidget {
     return Column(
       children: [
         Text("I've learned this much Flutter so far:"), 
-        LinearProgressIndicator(value: numCompletedTasks / tasks.length),
+        LinearProgressIndicator(
+          value: numCompletedTasks / tasks.length, 
+          color: numCompletedTasks >= 4 ? Colors.amber : Colors.purple,
+        ),
       ],
     );
   }
