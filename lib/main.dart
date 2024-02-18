@@ -38,12 +38,48 @@ class MyHomePage extends StatelessWidget {
         title: Text("This is my first Flutter app!"),
       ),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Progress(),
-          TaskList(), 
-          ],
+          Row(
+            children: [
+              TaskList(), 
+              HiddenButton(),
+            ],
+          ),
+        ],
       ),
     );
+  }
+}
+
+class HiddenButton extends StatefulWidget {
+  const HiddenButton({super.key});
+
+  @override
+  State<HiddenButton> createState() => _ButtonState();
+}
+
+class _ButtonState extends State<HiddenButton> {
+  @override
+  Widget build(BuildContext context) {
+    final ButtonStyle style = FilledButton.styleFrom(textStyle: const TextStyle(fontSize: 20));
+
+    return Wrap(
+      direction: Axis.vertical,
+      crossAxisAlignment: WrapCrossAlignment.end,
+      spacing: 5,
+      runSpacing: 5, 
+      children:[
+          FilledButton(
+          style: style,
+          onPressed: () {},
+          child: const Text('Venture forth'),
+          ),
+        ]
+      );
+
   }
 }
 
@@ -70,7 +106,11 @@ class TaskList extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     var tasks = ref.watch(tasksProvider);
 
-    return Column(
+    return Wrap(
+      direction: Axis.vertical,
+      crossAxisAlignment: WrapCrossAlignment.start,
+      spacing: 5,
+      runSpacing: 5, 
       children: tasks.map((task) => TaskItem(task:task),).toList(),
     );
   }
